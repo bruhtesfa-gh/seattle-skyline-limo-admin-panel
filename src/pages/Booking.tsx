@@ -106,11 +106,11 @@ function Booking() {
       if (fromAddress !== "") updateData.fromAddress = fromAddress;
       if (toAddress !== "") updateData.toAddress = toAddress;
       if (journeyDate !== "") updateData.journeyDate = journeyDate;
-      console.log(updateData);
+      //console.log(updateData);
       if (Object.keys(updateData).length === 0) {
         return;
       }
-      const response = await axios.patch(`https://limo-backend.onrender.com/book/${id}`, updateData, {
+      const response = await axios.patch(`https://seattle-skyline-limo-server.onrender.com/book/${id}`, updateData, {
         withCredentials: true,
       });
       if (response.status === 200) {
