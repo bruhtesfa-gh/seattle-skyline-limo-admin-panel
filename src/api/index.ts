@@ -1,6 +1,6 @@
 import * as ax from "axios";
 const BASE_URL = "https://seattle-skyline-limo-server.onrender.com";
-const axios = ax.default.create({
+let axios = ax.default.create({
   baseURL: BASE_URL,
   withCredentials: true,
   headers: {
@@ -34,8 +34,14 @@ export async function login({
   );
   if (status === 200) {
     console.log(data.data.token);
-    axios.defaults.headers.common["Authorization"] = "Bearer " + data.data.token;
     localStorage.setItem("token", data.data.token);
+    axios = ax.default.create({
+      baseURL: BASE_URL,
+      withCredentials: true,
+      headers: {
+        "Authorization": "Bearer " + data.data.token,
+      },
+    });
   }
   return data;
 }
@@ -298,9 +304,15 @@ export async function deleteReservation(id: string) {
 
 export async function logout() {
   const { data, status } = await axios.post(`/auth/logout`);
-  if (status == 200) {
-    axios.defaults.headers.common["Authorization"] = "";
+  if (status === 200) {
     localStorage.removeItem("token");
+    axios = ax.default.create({
+      baseURL: BASE_URL,
+      withCredentials: true,
+      headers: {
+        "Authorization": "",
+      },
+    });
   }
   return data;
 }
