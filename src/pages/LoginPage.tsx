@@ -13,7 +13,7 @@ function LoginPage() {
     mutationFn: login,
     onError(error, variables, context) {
       if (error instanceof AxiosError) {
-        showErrorToast(error.response?.data["message"]);
+        showErrorToast(error.response?.data?.data["message"]);
       }
     },
     onSuccess: async (data, variables, context) => {

@@ -33,8 +33,7 @@ export async function login({
     }
   );
   if (status === 200) {
-    let token = data.token;
-    localStorage.setItem("token", token);
+    localStorage.setItem("token", data.data.token);
   }
   return data;
 }
