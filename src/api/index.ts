@@ -33,7 +33,6 @@ export async function login({
     }
   );
   if (status === 200) {
-    console.log(data.data.token);
     localStorage.setItem("token", data.data.token);
     axios = ax.default.create({
       baseURL: BASE_URL,
