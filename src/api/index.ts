@@ -33,6 +33,7 @@ export async function login({
     }
   );
   if (status === 200) {
+    console.log(data);
     localStorage.setItem("token", data.data.token);
   }
   return data;
