@@ -33,7 +33,8 @@ export async function login({
     }
   );
   if (status === 200) {
-    console.log(data.token);
+    console.log(data.data.token);
+    axios.defaults.headers.common["Authorization"] = "Bearer " + data.data.token;
     localStorage.setItem("token", data.data.token);
   }
   return data;
@@ -296,7 +297,11 @@ export async function deleteReservation(id: string) {
 /*API REQUEST RELATED TO user */
 
 export async function logout() {
-  const { data } = await axios.post(`/auth/logout`);
+  const { data, status } = await axios.post(`/auth/logout`);
+  if (status == 200) {
+    axios.defaults.headers.common["Authorization"] = "";
+    localStorage.removeItem("token");
+  }
   return data;
 }
 
