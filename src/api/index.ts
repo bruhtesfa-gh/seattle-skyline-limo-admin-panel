@@ -3,6 +3,9 @@ const BASE_URL = "https://seattle-skyline-limo-server.onrender.com";
 const axios = ax.default.create({
   baseURL: BASE_URL,
   withCredentials: true,
+  headers: {
+    "Authorization": "Bearer " + localStorage.getItem("token"),
+  },
 });
 export async function getMe() {
   const { data } = await axios.get("/me");
@@ -19,13 +22,20 @@ export async function login({
   email: string;
   password: string;
 }) {
-  const { data } = await axios.post(
+  const { data, status } = await axios.post(
     "/auth/login",
     { email, password },
     {
+      headers: {
+        "Authorization": "Bearer " + localStorage.getItem("token"),
+      },
       withCredentials: true,
     }
   );
+  if (status === 200) {
+    let token = data.token;
+    localStorage.setItem("token", token);
+  }
   return data;
 }
 
