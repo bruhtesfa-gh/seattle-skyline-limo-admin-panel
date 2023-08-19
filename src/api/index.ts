@@ -4,7 +4,7 @@ let axios = ax.default.create({
   baseURL: BASE_URL,
   withCredentials: true,
   headers: {
-    "Authorization": "Bearer " + localStorage.getItem("token"),
+    Authorization: "Bearer " + localStorage.getItem("token"),
   },
 });
 export async function getMe() {
@@ -27,18 +27,18 @@ export async function login({
     { email, password },
     {
       headers: {
-        "Authorization": "Bearer " + localStorage.getItem("token"),
+        Authorization: "Bearer " + localStorage.getItem("token"),
       },
       withCredentials: true,
     }
   );
   if (status === 200) {
-    localStorage.setItem("token", data.data.token);
+    localStorage.setItem("token", data.data?.token);
     axios = ax.default.create({
       baseURL: BASE_URL,
       withCredentials: true,
       headers: {
-        "Authorization": "Bearer " + data.data.token,
+        Authorization: "Bearer " + data.data?.token,
       },
     });
   }
@@ -109,11 +109,77 @@ export async function getBlog(id: string) {
   const { data } = await axios.get(`/blog/${id}`);
   return data;
 }
-export async function deleteBlog(id: string) {
-  const { data } = await axios.delete(`/blog/${id}`);
+/*API REQUEST RELATED TO BLOG END */
+
+/*AP RELATED TO SERVICE START */
+export async function postService({
+  title,
+  content,
+  img,
+}: {
+  title: string;
+  content: string;
+  img: File;
+}) {
+  const { data } = await axios.post(
+    "/service",
+    { title, content, img },
+    {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    }
+  );
   return data;
 }
-/*API REQUEST RELATED TO BLOG END */
+export async function updateService({
+  id,
+  title,
+  content,
+  img,
+}: {
+  title: string;
+  content: string;
+  img: File;
+  id: string;
+}) {
+  if (img) {
+    const { data } = await axios.patch(
+      `/service/${id}`,
+      { title, content, img },
+      {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      }
+    );
+    return data;
+  } else {
+    const { data } = await axios.patch(
+      `/service/${id}`,
+      { title, content },
+      {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      }
+    );
+    return data;
+  }
+}
+export async function getServices(page = 1) {
+  const { data } = await axios.get(`/service?page=${page}`);
+  return data;
+}
+export async function deleteBlog(id: string) {
+  const { data } = await axios.delete(`/service/${id}`);
+  return data;
+}
+export async function deleteService(id: string) {
+  const { data } = await axios.delete(`/service/${id}`);
+  return data;
+}
+/*AP RELATED TO SERVICE END */
 
 /*API REQUEST RELATED TO VEHICLE */
 export async function postVehicle({
@@ -309,7 +375,7 @@ export async function logout() {
       baseURL: BASE_URL,
       withCredentials: true,
       headers: {
-        "Authorization": "",
+        Authorization: "",
       },
     });
   }
