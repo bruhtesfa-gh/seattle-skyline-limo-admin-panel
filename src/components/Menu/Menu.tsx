@@ -42,12 +42,6 @@ function Menu() {
             <div data-i18n="Analytics">Blog</div>
           </div>
         </NavLink>
-        <NavLink to="/services" className="menu-item ">
-          <div className="menu-link">
-            <i className="menu-icon tf-icons bx bxl-blogger"></i>
-            <div data-i18n="Analytics">Service</div>
-          </div>
-        </NavLink>
       </ul>
     </aside>
   );

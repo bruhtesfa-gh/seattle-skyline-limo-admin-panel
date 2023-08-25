@@ -1,7 +1,7 @@
 import React, { ChangeEvent, useEffect, useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import { useNavigate, useParams } from "react-router-dom";
-import { getReservation, updateReservation } from "../api";
+import { BASE_URL, getReservation, updateReservation } from "../api";
 import { FullScreenSpinner } from "../components/Spinner";
 import axios from "axios";
 type Status = "PENDING" | "COMPLETED" | "REJECTED";
@@ -11,10 +11,6 @@ const vehicle = [
   {
     title: "Name",
     key: "name",
-  },
-  {
-    title: "Model",
-    key: "model",
   },
   {
     title: "Price per day",
@@ -59,6 +55,10 @@ const customer = [
     key: "toAddress",
   },
   {
+    title: "Driver Gender Preference",
+    key: "driverGender",
+  },
+  {
     title: "Lugggage Count",
     key: "luggageCount",
   },
@@ -100,8 +100,7 @@ function Booking() {
 
   const handleUpdate = async () => {
     try {
-      let updateData = {
-      } as any;
+      let updateData = {} as any;
       if (status) updateData.status = status;
       if (fromAddress !== "") updateData.fromAddress = fromAddress;
       if (toAddress !== "") updateData.toAddress = toAddress;
@@ -110,7 +109,7 @@ function Booking() {
       if (Object.keys(updateData).length === 0) {
         return;
       }
-      const response = await axios.patch(`https://atl-luxe-limo-server.onrender.com/book/${id}`, updateData, {
+      const response = await axios.patch(`${BASE_URL}/book/${id}`, updateData, {
         withCredentials: true,
       });
       if (response.status === 200) {
@@ -118,9 +117,7 @@ function Booking() {
       }
       // mutation.mutate(updateData);
       //return data;
-    } catch (error: any) {
-
-    }
+    } catch (error: any) {}
   };
   useEffect(() => {
     if (data) {
@@ -187,10 +184,11 @@ function Booking() {
                     placeholder="Pick-up Date"
                     min={new Date().toISOString().split(".")[0]}
                     onChange={(e) => setJourneyDate(e.target.value)}
-                    defaultValue={new Date(data?.journeyDate).toISOString().split(".")[0]}
+                    defaultValue={
+                      new Date(data?.journeyDate).toISOString().split(".")[0]
+                    }
                   />
                 </div>
-
               </div>
               <div className="mb-3 col-md-2">
                 <button
@@ -205,14 +203,20 @@ function Booking() {
                 <div className="col">
                   <h5 className="fw-bold py-3 mb-2">Customer Detail</h5>
                   {customer.map(({ title, key }) => {
-                    return <DetailRow key={key} title={title} value={data[key]} />;
+                    return (
+                      <DetailRow key={key} title={title} value={data[key]} />
+                    );
                   })}
                 </div>
                 <div className="col">
                   <h5 className="fw-bold py-3 mb-2">Vehicle Detail</h5>
                   {vehicle.map(({ title, key }) => {
                     return (
-                      <DetailRow key={key} title={title} value={data["vehicle"][key]} />
+                      <DetailRow
+                        key={key}
+                        title={title}
+                        value={data["vehicle"][key]}
+                      />
                     );
                   })}
                 </div>
@@ -261,7 +265,11 @@ function Select({
       >
         {options.map((opt: string) => {
           return (
-            <option key={opt} style={{ textTransform: "capitalize" }} value={opt}>
+            <option
+              key={opt}
+              style={{ textTransform: "capitalize" }}
+              value={opt}
+            >
               {opt}
             </option>
           );

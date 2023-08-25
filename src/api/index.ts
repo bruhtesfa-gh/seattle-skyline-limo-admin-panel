@@ -1,5 +1,5 @@
 import * as ax from "axios";
-const BASE_URL = "https://seattle-skyline-limo-server.onrender.com";
+export const BASE_URL = "https://seattle-skyline-limo-server.onrender.com";
 let axios = ax.default.create({
   baseURL: BASE_URL,
   withCredentials: true,
