@@ -1,5 +1,5 @@
 import * as ax from "axios";
-export const BASE_URL = "https://seattle-skyline-limo-server.onrender.com";
+export const BASE_URL = "http://localhost:4000";
 let axios = ax.default.create({
   baseURL: BASE_URL,
   withCredentials: true,
@@ -169,6 +169,12 @@ export async function updateService({
 }
 export async function getServices(page = 1) {
   const { data } = await axios.get(`/service?page=${page}`);
+  return data;
+}
+
+// get service by id
+export async function getService(id: string) {
+  const { data } = await axios.get(`/service/${id}`);
   return data;
 }
 export async function deleteBlog(id: string) {

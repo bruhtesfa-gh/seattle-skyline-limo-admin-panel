@@ -9,20 +9,16 @@ function App() {
     getMe,
     {
       retry: false,
-      onSuccess: (data) => {},
-      onError(err) {
-        // if (err instanceof AxiosError) {
-        //   showErrorToast(err.response?.data["message"]);
-        // }
-      },
+      onSuccess: (data) => { },
+      onError: (err) => { },
     }
   );
-  if (isLoading) return <FullScreenSpinner />;
-  return (
-    <>
-      <Router isAuth={isSuccess} />
-    </>
-  );
+
+  if (isLoading) {
+    return <FullScreenSpinner />;
+  }
+
+  return <Router isAuth={isSuccess} />;
 }
 
 export default App;

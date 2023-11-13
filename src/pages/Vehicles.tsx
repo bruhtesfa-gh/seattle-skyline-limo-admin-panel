@@ -34,11 +34,13 @@ function Vehicles() {
       },
     }
   );
+
   useEffect(() => {
-    if (inView) {
+    if (inView && hasNextPage) {
       fetchNextPage();
     }
-  }, [inView]);
+  }, [inView, hasNextPage]);
+
   return (
     <>
       <DeleteConfirmationModal
@@ -58,17 +60,15 @@ function Vehicles() {
         </li>
       </ul>
       <div className="row mb-5">
-        {data?.pages.map((vehicles: Vehicle[]) => {
-          return vehicles.map((vehicle: Vehicle) => {
-            return (
-              <VehicleCard
-                key={vehicle.id}
-                vehicle={vehicle}
-                setDeleteModalId={setDeleteModalId}
-              />
-            );
-          });
-        })}
+        {data?.pages.flatMap((vehicles: Vehicle[]) =>
+          vehicles.map((vehicle: Vehicle) => (
+            <VehicleCard
+              key={vehicle.id}
+              vehicle={vehicle}
+              setDeleteModalId={setDeleteModalId}
+            />
+          ))
+        )}
       </div>
       {(isFetching || isLoading) && <FullScreenSpinner />}
       <div ref={ref}></div>

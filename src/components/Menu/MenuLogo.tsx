@@ -1,6 +1,10 @@
 import { Link } from "react-router-dom";
 import LogoImage from "../../assets/react.svg";
 function MenuLogo() {
+  const handleMenuToggle = () => {
+    document.documentElement.classList.toggle("layout-menu-expanded");
+  };
+
   return (
     <div className="app-brand demo">
       <Link to="/" className="app-brand-link">
@@ -16,15 +20,13 @@ function MenuLogo() {
         </span>
       </Link>
 
-      <a
-        onClick={(e) => {
-          document.documentElement.classList.toggle("layout-menu-expanded");
-        }}
-        href="javascript:void(0);"
-        className="layout-menu-toggle menu-link text-large ms-auto d-block d-xl-none"
+      <button
+        onClick={handleMenuToggle}
+        // href="javascript:void(0);"
+        className="layout-menu-toggle menu-link text-large ms-auto d-block d-xl-none btn"
       >
         <i className="bx bx-chevron-left bx-sm align-middle"></i>
-      </a>
+      </button>
     </div>
   );
 }

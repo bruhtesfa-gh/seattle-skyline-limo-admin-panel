@@ -1,5 +1,5 @@
 //@ts-nocheck
-import { getBlog, postService, updateService } from "../api";
+import { getService, postService, updateService } from "../api";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -15,7 +15,7 @@ function Service() {
   const { id } = useParams();
   const { data, isLoading } = useQuery(
     ["service", id],
-    () => getBlog(id as string),
+    () => getService(id as string),
     {
       enabled: Boolean(id),
     }
@@ -126,9 +126,8 @@ function Service() {
                           fileRef.current = iref;
                         }}
                         // ref={fileRef}
-                        className={`form-control ${
-                          errors.blogImg ? "border-danger" : ""
-                        }`}
+                        className={`form-control ${errors.blogImg ? "border-danger" : ""
+                          }`}
                         aria-describedby="inputGroupFileAddon04"
                         aria-label="Upload"
                         accept="image/*"
@@ -151,9 +150,8 @@ function Service() {
                       <input
                         {...register("blogTitle")}
                         type="text"
-                        className={`form-control ${
-                          errors.blogTitle ? "border-danger" : ""
-                        }`}
+                        className={`form-control ${errors.blogTitle ? "border-danger" : ""
+                          }`}
                         id="basic-icon-default-fullname"
                         placeholder="service title"
                         aria-label="service title"
@@ -171,9 +169,8 @@ function Service() {
                   </label>
                   <textarea
                     {...register("blogContent")}
-                    className={`form-control  ${
-                      errors.blogContent ? "border-danger" : ""
-                    }`}
+                    className={`form-control  ${errors.blogContent ? "border-danger" : ""
+                      }`}
                     id="exampleFormControlTextarea1"
                     rows={23}
                     placeholder="service content here...."

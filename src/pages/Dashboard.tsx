@@ -68,43 +68,43 @@ function Dashboard({ }) {
   return (
     <>
       <div className="row mb-5">
-        {keys.map(({ key, label }, index) => {
-          return (
-            <div className="col-md-6 col-lg-4 mt-4">
-              <Link to={label.includes("Reservations") ? "/reservations" : label.includes("Blogs") ? "/blogs" : "/vehicles"} style={{ color: "inherit" }}>
-                <div className="card">
-                  {index === 0 && data[key] > 0 && <div style={{
+        {keys.map(({ key, label }, index) => (
+          <div className="col-md-6 col-lg-4 mt-4" key={key}>
+            <Link to={label.includes("Reservations") ? "/reservations" : label.includes("Blogs") ? "/blogs" : "/vehicles"} style={{ color: "inherit" }}>
+              <div className="card">
+                {index === 0 && data[key] > 0 && (
+                  <div style={{
                     position: "absolute",
                     top: "-10px",
                     right: "-10px",
                   }}>
                     <NewNotificationIcon />
-                  </div>}
-                  <div className="card-body">
-                    <div className="card-title d-flex align-items-start justify-content-between">
-                      <div className="avatar flex-shrink-0">
-                        {
-                          label.includes("Blogs") ? <BlogIcon /> : label.includes("Vehicles") ? <VehicleIcon /> :
-                            (label.includes("New") || label.includes("Total")) ? <ListIcon /> :
-                              label.includes("Completed") ? <CheckIcon /> :
-                                label.includes("Rejected") ? <TrashIcon /> :
-                                  label.includes("Pending") ? <ClockIcon /> :
-                                    <img
-                                      src={paypalImg}
-                                      alt="Credit Card"
-                                      className="rounded"
-                                    />
-                        }
-                      </div>
-                    </div>
-                    <span className="d-block mb-1">{label}</span>
-                    <h3 className="card-title text-nowrap mb-2">{data[key]}</h3>
                   </div>
+                )}
+                <div className="card-body">
+                  <div className="card-title d-flex align-items-start justify-content-between">
+                    <div className="avatar flex-shrink-0">
+                      {label.includes("Blogs") ? <BlogIcon /> :
+                        label.includes("Vehicles") ? <VehicleIcon /> :
+                          (label.includes("New") || label.includes("Total")) ? <ListIcon /> :
+                            label.includes("Completed") ? <CheckIcon /> :
+                              label.includes("Rejected") ? <TrashIcon /> :
+                                label.includes("Pending") ? <ClockIcon /> :
+                                  <img
+                                    src={paypalImg}
+                                    alt="Credit Card"
+                                    className="rounded"
+                                  />
+                      }
+                    </div>
+                  </div>
+                  <span className="d-block mb-1">{label}</span>
+                  <h3 className="card-title text-nowrap mb-2">{data[key]}</h3>
                 </div>
-              </Link>
-            </div>
-          );
-        })}
+              </div>
+            </Link>
+          </div>
+        ))}
       </div>
     </>
   );
